@@ -16,8 +16,8 @@ public class CensorController : ControllerBase
         var response = new CensorResponse
         {
             ModifiedText = modifiedText,
-            OriginalFrequencies = new List<WordFrequency>(),
-            ModifiedFrequencies = new List<WordFrequency>()
+            OriginalFrequencies = CalculateWordFrequencies(request.InputText),
+            ModifiedFrequencies = CalculateWordFrequencies(modifiedText)
         };
 
         return Ok(response);
@@ -93,5 +93,33 @@ public class CensorController : ControllerBase
 
         return string.Join(". ", result) + (text.EndsWith(".") ? "." : "");
     }
+
+    private List<WordFrequency> CalculateWordFrequencies(string text)
+    {
+        var wordCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        var cleanedText = text
+            .Replace("(", "")
+            .Replace(")", "")
+            .Replace("|", ""); // eltávolítjuk a jelöléseket
+
+        var words = cleanedText
+            .ToLower()
+            .Split(new[] { ' ', '.', ',', '!', '?', ';', ':', '\n', '\r', '\t', '"' }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var word in words)
+        {
+            if (wordCounts.ContainsKey(word))
+                wordCounts[word]++;
+            else
+                wordCounts[word] = 1;
+        }
+
+        return wordCounts
+            .OrderByDescending(kvp => kvp.Value)
+            .Select(kvp => new WordFrequency { Word = kvp.Key, Count = kvp.Value })
+            .ToList();
+    }
+
 
 }
