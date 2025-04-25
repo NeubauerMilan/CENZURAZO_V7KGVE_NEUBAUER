@@ -45,3 +45,23 @@ function displayModifiedText(text) {
     resultDiv.append(document.createTextNode(text.slice(lastIndex)));
 }
 
+function createBadge(text, color) {
+    const span = document.createElement('span');
+    span.className = `badge bg-${color} mx-1`;
+    span.textContent = text;
+    return span;
+}
+
+function displayFrequencies(elementId, freqList) {
+    const ul = document.getElementById(elementId);
+    ul.innerHTML = '';
+
+    const max = freqList.length > 0 ? freqList[0].count : 1;
+
+    freqList.forEach(freq => {
+        const li = document.createElement('li');
+        li.textContent = `${freq.word} (${freq.count})`;
+        li.style.fontSize = `${1 + (freq.count / max) * 1.5}em`;
+        ul.appendChild(li);
+    });
+}
