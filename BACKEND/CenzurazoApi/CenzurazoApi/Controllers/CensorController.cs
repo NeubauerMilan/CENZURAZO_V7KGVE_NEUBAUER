@@ -7,7 +7,7 @@ namespace CenzurazoApi.Controllers;
 [Route("[controller]")]
 public class CensorController : ControllerBase
 {
-    [HttpPost]
+    [HttpPost("gonb")]
     public IActionResult Post([FromBody] CensorRequest request)
     {
         var blacklist = ParseBlacklist(request.BlacklistText);
