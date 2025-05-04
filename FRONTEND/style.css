@@ -11,3 +11,6 @@ body{
     color: #ccc;
 font-family: 'Courier New', monospace;
 }
+#result {
+    color: #1a1a1a;
+}
