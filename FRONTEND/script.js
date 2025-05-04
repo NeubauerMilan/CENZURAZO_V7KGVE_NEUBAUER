@@ -2,7 +2,7 @@
     const blacklist = document.getElementById('blacklist').value;
     const inputText = document.getElementById('inputText').value;
 
-    const response = await fetch('https://localhost:5001/censor', {
+    const response = await fetch('http://localhost:5257/swagger/index.html', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
