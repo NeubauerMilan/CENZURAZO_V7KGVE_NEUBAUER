@@ -17,6 +17,8 @@
     displayModifiedText(data.modifiedText);
     displayFrequencies('originalFreq', data.originalFrequencies);
     displayFrequencies('modifiedFreq', data.modifiedFrequencies);
+    const cleanText = extractCleanText(data.modifiedText);
+    document.getElementById('cleanText').value = cleanText;
 }
 function displayModifiedText(text) {
     const resultDiv = document.getElementById('result');
