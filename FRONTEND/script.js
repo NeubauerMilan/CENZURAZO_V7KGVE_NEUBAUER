@@ -65,3 +65,6 @@ function displayFrequencies(elementId, freqList) {
         ul.appendChild(li);
     });
 }
+function extractCleanText(textWithBadges) {
+    return textWithBadges.replace(/\(([^|]+)\|([^)]+)\)/g, '$2');
+}
