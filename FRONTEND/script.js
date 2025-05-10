@@ -19,6 +19,9 @@
     displayFrequencies('modifiedFreq', data.modifiedFrequencies);
     const cleanText = extractCleanText(data.modifiedText);
     document.getElementById('cleanText').value = cleanText;
+
+    const cleanFrequencies = calculateFrequencies(cleanText);
+    displayFrequencies('modifiedFreq', cleanFrequencies);
 }
 function displayModifiedText(text) {
     const resultDiv = document.getElementById('result');
@@ -69,4 +72,19 @@ function displayFrequencies(elementId, freqList) {
 }
 function extractCleanText(textWithBadges) {
     return textWithBadges.replace(/\(([^|]+)\|([^)]+)\)/g, '$2');
+}
+function calculateFrequencies(text) {
+    const wordCounts = {};
+    const words = text
+        .toLowerCase()
+        .split(/[\s.,!?;:"()\n\r]+/)
+        .filter(w => w.length > 0);
+
+    for (const word of words) {
+        wordCounts[word] = (wordCounts[word] || 0) + 1;
+    }
+
+    return Object.entries(wordCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([word, count]) => ({ word, count }));
 }
